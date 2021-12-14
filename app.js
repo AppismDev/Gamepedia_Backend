@@ -20,13 +20,15 @@ const {auth} = require("./functions/Auth");
 //Import Routers
 const gamesRouter = require("./routers/Games");
 const coverRouter = require("./routers/Cover");
+const screenShootRouter = require("./routers/Screenshots");
+const artWorksRouter = require("./routers/Artworks");
 
 
 // Routers
 app.use('/games',auth,gamesRouter);
 app.use('/cover',auth,coverRouter);
-
-
+app.use('/screenshots',auth,screenShootRouter);
+app.use('/artworks',auth,artWorksRouter);
 
 
 
