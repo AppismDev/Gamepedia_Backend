@@ -11,8 +11,6 @@ app.use(bodyParser.json());
 
 
 
-
-
 //Auth
 const {auth} = require("./functions/Auth");
 
@@ -22,6 +20,8 @@ const gamesRouter = require("./routers/Games");
 const coverRouter = require("./routers/Cover");
 const screenShootRouter = require("./routers/Screenshots");
 const artWorksRouter = require("./routers/Artworks");
+
+
 
 
 // Routers
