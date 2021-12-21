@@ -84,6 +84,7 @@ router.get("/bestOfAllTime", (req, res) => {
                         version_title,
                         videos.video_id,
                         websites.url,
+                        name,
                         checksum;
             sort total_rating desc;
             sort total_rating_count desc;
@@ -214,6 +215,7 @@ router.get("/bestOfLastMonths", (req, res) => {
                         version_title,
                         videos.video_id,
                         websites.url,
+                        name,
                         checksum;
             sort total_rating desc;
             sort total_rating_count desc;
@@ -343,6 +345,7 @@ router.get("/bestOfLastYear", (req, res) => {
                         version_title,
                         videos.video_id,
                         websites.url,
+                        name,
                         checksum;
             sort total_rating desc;
             sort total_rating_count desc;
