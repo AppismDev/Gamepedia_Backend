@@ -8,9 +8,10 @@ exports.GAMES_ENDPOINT = "https://api.igdb.com/v4/games";
 exports.COVERS_ENDPOINT = "https://api.igdb.com/v4/covers";
 exports.SCREENSHOTS_ENDPOINT = "https://api.igdb.com/v4/screenshots";
 exports.ARTWORKS_ENDPOINT = "https://api.igdb.com/v4/artworks";
+exports.COMPANY_ENDPOINT = "https://api.igdb.com/v4/companies";
 
 
 
 
-exports.MAX_PAGE_LIMIT = 20;
+exports.MAX_PAGE_LIMIT = 10;
 
