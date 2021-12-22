@@ -10,6 +10,8 @@ exports.SCREENSHOTS_ENDPOINT = "https://api.igdb.com/v4/screenshots";
 exports.ARTWORKS_ENDPOINT = "https://api.igdb.com/v4/artworks";
 exports.COMPANY_ENDPOINT = "https://api.igdb.com/v4/companies";
 exports.GENRES_ENDPOINT = "https://api.igdb.com/v4/genres";
+exports.PLATFORMS_ENDPOINT = "https://api.igdb.com/v4/platforms";
+
 
 
 

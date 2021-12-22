@@ -22,6 +22,7 @@ const screenShootRouter = require("./routers/Screenshots");
 const artWorksRouter = require("./routers/Artworks");
 const companyRouter = require("./routers/Company");
 const genresRouter = require("./routers/Genres");
+const platformsRouter = require("./routers/Platforms");
 
 
 
@@ -33,6 +34,7 @@ app.use('/screenshots',auth,screenShootRouter);
 app.use('/artworks',auth,artWorksRouter);
 app.use('/company',auth,companyRouter);
 app.use('/genres',auth,genresRouter);
+app.use('/platforms',auth,platformsRouter);
 
 
 
