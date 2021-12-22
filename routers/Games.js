@@ -14,6 +14,112 @@ router.get("/", (req, res) => {
   return res.status(200).send("Gamepedia API - Games Router");
 });
 
+
+
+router.get("/detail/:id", (req, res) => {
+  const accessToken = req.tokenInfo.accessToken;
+
+  const gameId = req.params.id;
+
+  if(gameId === undefined) return res.status(404).json({message: 'Game ID Not Found !'});
+
+  getGameDetails()
+    .then((data) => {
+      return res.send(data);
+    })
+    .catch((error) => {
+      return res.status(400).json({
+        message: "[Games] [getGameDetails] Critical Error",
+        error: { ...error },
+      });
+    });
+
+  async function getGameDetails() {
+    try {
+
+      let data;
+      let headers = {
+        Accept: "application/json",
+        "Client-ID": IGDB_CLIENT_ID,
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "text/plain",
+      };
+
+
+      let bodyText = `fields 
+                        id,
+                        aggregated_rating,
+                        aggregated_rating_count,
+                        artworks.image_id,
+                        category,
+                        collection.name,
+                        collection.games,
+                        cover.image_id,
+                        created_at,
+                        dlcs.name,
+                        expanded_games.name,
+                        expansions.name,
+                        first_release_date,
+                        follows,
+                        game_engines.name,
+                        game_engines.logo,
+                        game_engines.logo.image_id,
+                        game_modes.name,
+                        genres.name,
+                        involved_companies.company.name,
+                        platforms.name,
+                        platforms.platform_logo.image_id,
+                        player_perspectives.name,
+                        rating,
+                        rating_count,
+                        release_dates.date,
+                        screenshots.image_id,
+                        similar_games.name,
+                        similar_games.cover.image_id,
+                        similar_games.total_rating,
+                        status,
+                        storyline,
+                        summary,
+                        themes.name,
+                        total_rating,
+                        total_rating_count,
+                        version_title,
+                        videos.video_id,
+                        websites.url,
+                        name,
+                        checksum;
+            where  
+                id = ${gameId};
+      `;
+
+      const options = {
+        method: "POST",
+        url: GAMES_ENDPOINT,
+        data: bodyText,
+        headers: headers,
+        validateStatus: false,
+      };
+
+      let response = await axios(options);
+
+      if ((response.status = 200)) {
+        data = response.data[0];
+        return data;
+      } else {
+        return res.status(response.status).json({
+          message: "[Games] [getGameDetails] Bad Request",
+          error: { ...response.data },
+        });
+      }
+    } catch (error) {
+      return res.status(502).json({
+        message: "[Games] [getGameDetails] Server Error",
+        error: { ...error },
+      });
+    }
+  }
+});
+
 router.get("/bestOfAllTime", (req, res) => {
   const accessToken = req.tokenInfo.accessToken;
 
