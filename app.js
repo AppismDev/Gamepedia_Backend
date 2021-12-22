@@ -23,6 +23,8 @@ const artWorksRouter = require("./routers/Artworks");
 const companyRouter = require("./routers/Company");
 const genresRouter = require("./routers/Genres");
 const platformsRouter = require("./routers/Platforms");
+const ThemesRouter = require("./routers/Themes");
+const GameModesRouter = require("./routers/GameModes");
 
 
 
@@ -35,6 +37,8 @@ app.use('/artworks',auth,artWorksRouter);
 app.use('/company',auth,companyRouter);
 app.use('/genres',auth,genresRouter);
 app.use('/platforms',auth,platformsRouter);
+app.use('/themes',auth,ThemesRouter);
+app.use('/gamemodes',auth,GameModesRouter);
 
 
 
