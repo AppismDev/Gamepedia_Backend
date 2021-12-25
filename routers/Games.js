@@ -68,6 +68,7 @@ router.get("/detail/:id", (req, res) => {
                         genres.name,
                         involved_companies.company.name,
                         platforms.name,
+                        platforms.abbreviation,
                         platforms.platform_logo.image_id,
                         player_perspectives.name,
                         rating,
@@ -87,6 +88,7 @@ router.get("/detail/:id", (req, res) => {
                         videos.video_id,
                         websites.url,
                         name,
+                        slug,
                         checksum;
             where  
                 id = ${gameId};
@@ -172,6 +174,7 @@ router.get("/bestOfAllTime", (req, res) => {
                         genres.name,
                         involved_companies.company.name,
                         platforms.name,
+                        platforms.abbreviation,
                         platforms.platform_logo.image_id,
                         player_perspectives.name,
                         rating,
@@ -191,6 +194,7 @@ router.get("/bestOfAllTime", (req, res) => {
                         videos.video_id,
                         websites.url,
                         name,
+                        slug,
                         checksum;
             sort total_rating desc;
             sort total_rating_count desc;
@@ -303,6 +307,7 @@ router.get("/bestOfLastMonths", (req, res) => {
                         genres.name,
                         involved_companies.company.name,
                         platforms.name,
+                        platforms.abbreviation,
                         platforms.platform_logo.image_id,
                         player_perspectives.name,
                         rating,
@@ -322,6 +327,7 @@ router.get("/bestOfLastMonths", (req, res) => {
                         videos.video_id,
                         websites.url,
                         name,
+                        slug,
                         checksum;
             sort total_rating desc;
             sort total_rating_count desc;
@@ -433,6 +439,7 @@ router.get("/bestOfLastYear", (req, res) => {
                         genres.name,
                         involved_companies.company.name,
                         platforms.name,
+                        platforms.abbreviation,
                         platforms.platform_logo.image_id,
                         player_perspectives.name,
                         rating,
@@ -452,6 +459,7 @@ router.get("/bestOfLastYear", (req, res) => {
                         videos.video_id,
                         websites.url,
                         name,
+                        slug,
                         checksum;
             sort total_rating desc;
             sort total_rating_count desc;
