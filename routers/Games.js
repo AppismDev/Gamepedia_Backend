@@ -91,7 +91,9 @@ router.get("/detail/:id", (req, res) => {
                         slug,
                         checksum;
             where  
-                id = ${gameId};
+                id = ${gameId} &
+                cover.image_id != null &
+                name != null &
       `;
 
       const options = {
@@ -205,6 +207,7 @@ router.get("/bestOfAllTime", (req, res) => {
                 name != null &
                 first_release_date != null &
                 total_rating_count != null &
+                cover.image_id != null &
                 id != null &
                 rating != null & 
                 total_rating != null;
@@ -339,6 +342,7 @@ router.get("/bestOfLastMonths", (req, res) => {
                 first_release_date > ${lastMonthTimeStamp} &
                 cover != null &
                 total_rating != null &
+                cover.image_id != null &
                 rating != null &
                 id != null;
       `;
@@ -471,6 +475,7 @@ router.get("/bestOfLastYear", (req, res) => {
                 first_release_date > ${lastYearTimeStamp} &
                 cover != null &
                 total_rating != null &
+                cover.image_id != null &
                 rating != null &
                 id != null;
       `;
@@ -503,17 +508,17 @@ router.get("/bestOfLastYear", (req, res) => {
   }
 });
 
-router.get("/searchGame/:game", (req, res) => {
+router.get("/search", (req, res) => {
   const accessToken = req.tokenInfo.accessToken;
 
-  const gameName = req.params.game
+  const gameName = req.query.game
   getSearchedGame()
   .then((data) => {
     return res.send(data);
   })
   .catch((error) => {
     return res.status(400).json({
-      message: "[Games] [bestOfLastYear] Critical Error",
+      message: "[Games] [Search Game] Critical Error",
       error: { ...error },
     });
   });
@@ -576,9 +581,15 @@ router.get("/searchGame/:game", (req, res) => {
                         name,
                         slug,
                         checksum;
+                  sort total_rating desc;
+                  sort total_rating_count desc;      
                   where  
-                  name ~ *"${gameName}"*;
-                  `;
+                    name != null &
+                    name ~ *"${gameName}"* &
+                    total_rating != null &
+                    rating != null &
+                    cover.image_id != null; 
+                    `;
 
       const options = {
         method: "POST",
@@ -595,13 +606,13 @@ router.get("/searchGame/:game", (req, res) => {
         return data;
       } else {
         return res.status(response.status).json({
-          message: "[Games] [getSearchedGame] Bad Request",
+          message: "[Games] [Search Game] Bad Request",
           error: { ...response.data },
         });
       }
     } catch (error) {
       return res.status(502).json({
-        message: "[Games] [getSearchedGame] Server Error",
+        message: "[Games] [Search Game] Server Error",
         error: { ...error },
       });
     }
