@@ -508,6 +508,128 @@ router.get("/bestOfLastYear", (req, res) => {
   }
 });
 
+
+router.get("/discover", (req, res) => {
+  const accessToken = req.tokenInfo.accessToken;
+
+  let page = req.query.page;
+  if (page === undefined) page = 1;
+  if (page <= 0) page = 1;
+
+  getDiscover()
+    .then((data) => {
+      return res.send(data);
+    })
+    .catch((error) => {
+      return res.status(400).json({
+        message: "[Games] [discover] Critical Error",
+        error: { ...error },
+      });
+    });
+
+  async function getDiscover() {
+    try {
+      let data;
+      let headers = {
+        Accept: "application/json",
+        "Client-ID": IGDB_CLIENT_ID,
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "text/plain",
+      };
+
+      let offset = (page - 1) * 10;
+
+
+      let bodyText = `fields 
+                        id,
+                        aggregated_rating,
+                        aggregated_rating_count,
+                        artworks.image_id,
+                        category,
+                        collection.name,
+                        collection.games,
+                        cover.image_id,
+                        created_at,
+                        dlcs.name,
+                        expanded_games.name,
+                        expansions.name,
+                        first_release_date,
+                        follows,
+                        game_engines.name,
+                        game_engines.logo,
+                        game_engines.logo.image_id,
+                        game_modes.name,
+                        genres.name,
+                        involved_companies.company.name,
+                        platforms.name,
+                        platforms.abbreviation,
+                        platforms.platform_logo.image_id,
+                        player_perspectives.name,
+                        rating,
+                        rating_count,
+                        release_dates.date,
+                        screenshots.image_id,
+                        similar_games.name,
+                        similar_games.cover.image_id,
+                        similar_games.total_rating,
+                        status,
+                        storyline,
+                        summary,
+                        themes.name,
+                        total_rating,
+                        total_rating_count,
+                        version_title,
+                        videos.video_id,
+                        websites.url,
+                        name,
+                        slug,
+                        checksum;
+            sort total_rating desc;
+            sort total_rating_count desc;
+            limit ${offset + 10};
+            offset ${offset};
+            where  
+                name != null &
+                first_release_date != null &
+                game_modes.name = "Multiplayer" &
+                game_modes.id != null &
+                total_rating_count != null &
+                cover != null &
+                total_rating != null &
+                cover.image_id != null &
+                rating != null &
+                id != null;
+      `;
+
+      const options = {
+        method: "POST",
+        url: GAMES_ENDPOINT,
+        data: bodyText,
+        headers: headers,
+        validateStatus: false,
+      };
+
+      let response = await axios(options);
+
+      if ((response.status = 200)) {
+        data = response.data;
+        return data;
+      } else {
+        return res.status(response.status).json({
+          message: "[Games] [discover] Bad Request",
+          error: { ...response.data },
+        });
+      }
+    } catch (error) {
+      return res.status(502).json({
+        message: "[Games] [discover] Server Error",
+        error: { ...error },
+      });
+    }
+  }
+});
+
+
 router.get("/search", (req, res) => {
   const accessToken = req.tokenInfo.accessToken;
 
